@@ -1,0 +1,88 @@
+<!doctype html><html><head><meta charset="utf-8"><title>We Got Lists mockup c-meadow</title><link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet"><style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#111;}
+body{display:flex;flex-direction:column;align-items:center;padding:24px;font-family:'Pixelify Sans',monospace;}
+.phone{width:390px;height:844px;border-radius:44px;overflow:hidden;position:relative;border:10px solid #000;}
+.status{display:flex;justify-content:space-between;padding:14px 26px 4px;font-family:'Press Start 2P';font-size:10px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:8px 16px}
+.logo{font-family:'Press Start 2P';line-height:1.25}
+.coins{display:flex;align-items:center;gap:6px;font-family:'Press Start 2P';font-size:11px;padding:6px 8px}
+.tabs{display:flex;gap:8px;padding:6px 16px}
+.tab{flex:1;font-family:'Press Start 2P';font-size:11px;padding:12px 0;border:none;cursor:pointer}
+.win{margin:10px 12px;padding:12px;position:relative}
+.win-head{display:flex;align-items:center;gap:10px}
+.win-head h1{flex:1;font-family:'Press Start 2P';font-size:16px}
+.members{display:flex;gap:6px;align-items:center;margin:10px 0}
+.av{width:26px;height:26px;display:grid;place-items:center;font-family:'Press Start 2P';font-size:8px}
+.live{margin-left:auto;font-family:'Press Start 2P';font-size:8px}
+.add{display:flex;gap:8px;margin-bottom:10px}
+.add-in{flex:1;padding:10px;font-size:18px}
+.add-btn{display:grid;place-items:center;width:44px}
+.items{list-style:none}
+.items li{display:flex;align-items:center;gap:10px;padding:8px 6px;font-size:20px}
+.box{width:28px;height:28px;display:grid;place-items:center;flex:none}
+.txt{flex:1}
+.by{font-family:'Press Start 2P';font-size:7px;padding:4px}
+.heart{display:flex;align-items:center;gap:3px;width:38px;font-family:'Press Start 2P';font-size:9px}
+.trash{width:38px;display:flex}
+.sep{justify-content:center;font-family:'Press Start 2P';font-size:9px !important;padding:12px 0 6px !important}
+.done .txt{text-decoration:line-through;text-decoration-thickness:2px;opacity:.85}
+.clear{display:flex;gap:8px;margin-top:12px}
+.btn{flex:1;font-family:'Press Start 2P';font-size:9px;padding:12px 4px;border:none}
+.caption{color:#ddd;font-family:'Press Start 2P';font-size:11px;margin-top:16px;text-align:center;line-height:1.6}
+
+.phone{background:linear-gradient(#7cd0ff 0 120px,#5cc23c 120px);color:#3b2410;position:relative}
+.phone::before{content:"";position:absolute;left:0;right:0;top:120px;bottom:0;background-image:radial-gradient(#4aa82e 2px,transparent 2.5px),radial-gradient(#8de060 2px,transparent 2.5px);background-size:24px 24px,36px 36px;background-position:0 0,12px 18px;pointer-events:none}
+.phone>*{position:relative}
+.status{color:#1d3a5c}
+.coins{background:#fff6d8;border:3px solid #3b2410;box-shadow:inset -3px -3px 0 #d8c08a}
+.tab{background:#b5742a;color:#ffe9b8;border:3px solid #3b2410;box-shadow:inset 3px 3px 0 #dc9a4c,inset -3px -3px 0 #7a4612}
+.tab.on{background:#ffcf3a;color:#3b2410;box-shadow:inset 3px 3px 0 #fff0a0,inset -3px -3px 0 #c98a00}
+.win{background:#fff3d2;border:4px solid #3b2410;box-shadow:inset 0 0 0 4px #e6cf98,6px 6px 0 rgba(30,60,10,.5);}
+.win::before,.win::after{content:"";position:absolute;left:-10px;right:-10px;height:14px;background:#c98a3a;border:4px solid #3b2410;border-radius:8px}
+.win::before{top:-14px}.win::after{bottom:-14px}
+.win-head h1{color:#7a3b00;text-shadow:2px 2px 0 #ffcf3a}
+.av{border:3px solid #3b2410;color:#3b2410}.a1{background:#ffcf3a}.a2{background:#7cd0ff}.a3{background:#ff9ec0}
+.live{color:#2e8a12}
+.add-in{background:#fffaf0;color:#b49a6a;border:3px solid #3b2410;box-shadow:inset 3px 3px 0 #e6cf98}
+.add-btn{background:#38a8ff;border:3px solid #3b2410;box-shadow:inset -3px -3px 0 #1a6ab0,inset 3px 3px 0 #a8dcff}
+.items li{border-bottom:2px dotted #c9ae78}
+.box{background:#fffaf0;border:3px solid #3b2410}.box.on{background:#5cc23c}
+.by{background:#e6cf98;color:#3b2410}
+.heart b{color:#e8323e}
+.sep{color:#2e8a12;border:none !important}
+.done{color:#a89468}
+.btn{border:3px solid #3b2410;color:#fff;text-shadow:2px 2px 0 #3b2410}
+.b1{background:#5cc23c;box-shadow:inset 3px 3px 0 #a8f080,inset -3px -3px 0 #2e7a12}
+.b2{background:#e8323e;box-shadow:inset 3px 3px 0 #ff9ea4,inset -3px -3px 0 #8a1018}
+</style></head><body>
+<div class="phone">
+  <div class="status"><span>9:41</span><span>▮▮▮ ▰</span></div>
+  <header class="top">
+    <div class="logo"><span style="font-size:16px;color:#fff6d8;text-shadow:3px 3px 0 #2e4a12">WE GOT</span><br><span style="font-size:21px;color:#ffcf3a;text-shadow:3px 3px 0 #7a3b00">LISTS</span></div>
+    <div class="coins"><span data-icon="people" data-px="2"></span> 3</div>
+  </header>
+  <nav class="tabs">
+    <button class="tab">MY LISTS</button>
+    <button class="tab on">SHARED</button>
+  </nav>
+  <section class="win">
+    <div class="win-head">
+      <span class="star" data-icon="star" data-px="3"></span>
+      <h1>GROCERIES</h1>
+      <span class="refresh" data-icon="refresh" data-px="3"></span>
+    </div>
+    <div class="members"><span class="av a1">IZ</span><span class="av a2">JM</span><span class="av a3">AL</span><span class="live">● LIVE</span></div>
+    <div class="add"><span class="add-in">Add an item…</span><span class="add-btn" data-icon="plus" data-px="3"></span></div>
+    <ul class="items">
+      <li><span class="box"></span><span class="txt">Eggs (dozen)</span><span class="by">IZ</span><span class="heart"><span data-icon="heart" data-px="2"></span><b>2</b></span></li><li><span class="box"></span><span class="txt">Sourdough bread</span><span class="by">JM</span><span class="heart"><span data-icon="heartOff" data-px="2"></span></span></li><li><span class="box"></span><span class="txt">Bananas</span><span class="by">IZ</span><span class="heart"><span data-icon="heart" data-px="2"></span><b>1</b></span></li><li><span class="box"></span><span class="txt">Hot sauce</span><span class="by">AL</span><span class="heart"><span data-icon="heart" data-px="2"></span><b>3</b></span></li><li><span class="box"></span><span class="txt">Oat milk</span><span class="by">JM</span><span class="heart"><span data-icon="heartOff" data-px="2"></span></span></li>
+      <li class="sep">— GOT IT! (2) —</li>
+      <li class="done"><span class="box on"><span data-icon="check" data-px="2"></span></span><span class="txt">Coffee beans</span><span class="by">AL</span><span class="trash" data-icon="trash" data-px="2"></span></li><li class="done"><span class="box on"><span data-icon="check" data-px="2"></span></span><span class="txt">Paper towels</span><span class="by">IZ</span><span class="trash" data-icon="trash" data-px="2"></span></li>
+    </ul>
+    <div class="clear">
+      <button class="btn b1">CLEAR GOT IT</button>
+      <button class="btn b2">CLEAR ALL</button>
+    </div>
+  </section>
+</div>
+<div class="caption">C · MEADOW<br>Bright overworld + parchment scroll</div><script>window.PAL={"k":"#3b2410","y":"#ffcf3a","o":"#d77a00","w":"#fffaf0","g":"#b49a6a","r":"#e8323e","c":"#38a8ff"}</script><script src="pixel-icons.js"></script></body></html>
