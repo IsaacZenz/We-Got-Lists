@@ -9,6 +9,10 @@ const items = [
 ];
 const done = [{ t: "Coffee beans", by: "AL" }, { t: "Paper towels", by: "IZ" }];
 
+const NAV = `<nav class="tabs">
+    <button class="tab">MY LISTS</button>
+    <button class="tab on">SHARED</button>
+  </nav>`;
 const body = (theme) => `
 <div class="phone">
   <div class="status"><span>9:41</span><span>▮▮▮ ▰</span></div>
@@ -16,10 +20,7 @@ const body = (theme) => `
     <div class="logo">${theme.logo}</div>
     <div class="coins"><span data-icon="people" data-px="2"></span> 3</div>
   </header>
-  <nav class="tabs">
-    <button class="tab">MY LISTS</button>
-    <button class="tab on">SHARED</button>
-  </nav>
+  ${theme.grip ? '<div class="scene"></div>' : NAV}
   <section class="win">
     <div class="win-head">
       <span class="star" data-icon="star" data-px="3"></span>
@@ -29,15 +30,16 @@ const body = (theme) => `
     <div class="members"><span class="av a1">IZ</span><span class="av a2">JM</span><span class="av a3">AL</span><span class="live">● LIVE</span></div>
     <div class="add"><span class="add-in">Add an item…</span><span class="add-btn" data-icon="plus" data-px="3"></span></div>
     <ul class="items">
-      ${items.map(i => `<li><span class="box"></span><span class="txt">${i.t}</span><span class="by">${i.by}</span><span class="heart">${`<span data-icon="${i.h ? "heart" : "heartOff"}" data-px="2"></span>`}${i.h ? `<b>${i.h}</b>` : ""}</span></li>`).join("")}
+      ${items.map((i,n) => `<li class="${theme.grip && n===2 ? "drag" : ""}">${theme.grip ? `<span class="grip" data-icon="grip" data-px="2" data-pal='{"k":"#b49a6a"}'></span>` : ""}<span class="box"></span><span class="txt">${i.t}</span><span class="by">${i.by}</span><span class="heart">${`<span data-icon="${i.h ? "heart" : "heartOff"}" data-px="2"></span>`}${i.h ? `<b>${i.h}</b>` : ""}</span></li>`).join("")}
       <li class="sep">— GOT IT! (2) —</li>
-      ${done.map(i => `<li class="done"><span class="box on"><span data-icon="check" data-px="2"></span></span><span class="txt">${i.t}</span><span class="by">${i.by}</span><span class="trash" data-icon="trash" data-px="2"></span></li>`).join("")}
+      ${done.map(i => `<li class="done">${theme.grip ? `<span class="grip"></span>` : ""}<span class="box on"><span data-icon="check" data-px="2"></span></span><span class="txt">${i.t}</span><span class="by">${i.by}</span><span class="trash" data-icon="trash" data-px="2"></span></li>`).join("")}
     </ul>
     <div class="clear">
       <button class="btn b1">CLEAR GOT IT</button>
       <button class="btn b2">CLEAR ALL</button>
     </div>
   </section>
+  ${theme.grip ? NAV : ""}
 </div>
 <div class="caption">${theme.caption}</div>`;
 
@@ -166,8 +168,33 @@ const themes = {
   },
 };
 
-const fonts = `<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">`;
+themes["d-meadow-v2"] = Object.assign({}, themes["c-meadow"], {
+  caption: "MEADOW v2<br>Cows, a hungry pterodactyl,<br>readable list text, striped rows",
+  extra: '<script src="meadow-critters.js"></script>',
+  grip: true,
+  css: themes["c-meadow"].css + `
+.grip{width:12px;display:flex;flex:none;margin-right:-4px}
+.items li.drag{transform:translate(4px,-3px) rotate(-1deg);box-shadow:4px 5px 0 rgba(59,36,16,.35);outline:3px solid #3b2410;position:relative;z-index:3}
+.phone{display:flex;flex-direction:column;background:linear-gradient(#7cd0ff 0 var(--h,150px),#5cc23c var(--h,150px))}
+.phone::before{top:var(--h,150px)}
+.scene{height:88px;flex:none}
+.top{padding-top:4px}
+.win{flex:1;min-height:0;margin:26px 14px 26px;display:flex;flex-direction:column}
+.win .items{flex:1;min-height:0;overflow:hidden}
+.items li{padding:7px 8px}
+.tabs{padding:10px 14px 22px;background:#b5742a;border-top:4px solid #3b2410;box-shadow:inset 0 4px 0 #dc9a4c}
+.critters{position:absolute;inset:0;z-index:1;pointer-events:none}
+.phone>*:not(.critters){z-index:2}
+.items li .txt{font-family:'Nunito',sans-serif;font-weight:700;font-size:19px;letter-spacing:.1px}
+.items li:not(.sep):nth-of-type(odd){background:#fff3d2}
+.items li:not(.sep):nth-of-type(even){background:#f3dfac}
+.items li.done:nth-of-type(odd){background:#f7ecd0}
+.items li.done:nth-of-type(even){background:#ecdcb4}
+.items li{border-bottom:none;padding:10px 8px}
+.done .txt{text-decoration-thickness:2px;opacity:.6}
+`});
+const fonts = `<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Pixelify+Sans:wght@400;600&family=Nunito:wght@700&display=swap" rel="stylesheet">`;
 for (const [name, th] of Object.entries(themes)) {
-  fs.writeFileSync(`${name}.html`, `<!doctype html><html><head><meta charset="utf-8"><title>We Got Lists mockup ${name}</title>${fonts}<style>${shared}${th.css}</style></head><body>${body(th)}<script>window.PAL=${JSON.stringify(th.pal)}</script><script src="pixel-icons.js"></script></body></html>`);
+  fs.writeFileSync(`${name}.html`, `<!doctype html><html><head><meta charset="utf-8"><title>We Got Lists mockup ${name}</title>${fonts}<style>${shared}${th.css}</style></head><body>${body(th)}<script>window.PAL=${JSON.stringify(th.pal)}</script><script src="pixel-icons.js"></script>${th.extra||""}</body></html>`);
 }
 console.log("ok");

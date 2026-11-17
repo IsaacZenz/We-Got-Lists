@@ -6,5 +6,6 @@ Fonts: "Press Start 2P" (headings) and "Pixelify Sans" (list text), both under t
 - `a-quest-log.png`: RPG menu windows on a night sky
 - `b-arcade-pop.png`: loud pink checkerboard, thick black outlines, hard drop shadows
 - `c-meadow.png`: sunny grass field with a parchment scroll
+- **`d-meadow-v2` (chosen):** Meadow + cows and pterodactyl (`.gif` animated, `.html` live), Nunito list text, striped rows, drag handles, bottom tabs
 
 To regenerate: `node build.js`, then open the `.html` files in a browser.

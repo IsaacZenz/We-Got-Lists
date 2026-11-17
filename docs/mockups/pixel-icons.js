@@ -94,6 +94,16 @@ const ICONS = {
     "kcccccccccck",
     "kkkkkkkkkkkk",
   ],
+  grip: [
+    "kk.kk",
+    "kk.kk",
+    ".....",
+    "kk.kk",
+    "kk.kk",
+    ".....",
+    "kk.kk",
+    "kk.kk",
+  ],
   coin: [
     "..kkkk..",
     ".kyyyyk.",
