@@ -27,6 +27,7 @@
 | Meadow scene | A strip of meadow under the logo with cows and chickens wandering (each faces the way it walks). Every 20 seconds a pterodactyl swoops down and carries off a randomly chosen cow or chicken; a new one wanders in. Original sprites. Timing numbers live in `MEADOW` in `src/scene/meadow.ts`. |
 | Fonts (bundled in the app, not from Google, so they work offline) | Blocky pixel font ("Press Start 2P") for headings/buttons, "Pixelify Sans" for small text, and a clean readable font ("Nunito" bold) for list item text only. |
 | Rows | Alternating parchment shades on list rows. |
+| List frame | (Owner, 2026-11-18, option B) No wooden rods. Thin tan edge (darker parchment) with stepped "pixel" corners and a soft shadow, drawn by `src/ui/frame.svg`. Text boxes and tick boxes keep their bold outlines. |
 | List header | (Owner, 2026-11-18) "◀ All lists" on its own line; star (if favourite) + list name get the full row. A single ⋯ button at the bottom of the list opens: Refresh, Make/Remove favourite, Share (or People & sharing), Rename, Delete. |
 | Tabs | (Owner, 2026-11-18) Only shown on the all-lists screen, hidden while a list is open. My Lists / Shared tab bar sits at the **bottom** of the screen (thumb-reachable, iPhone convention, frees space for the meadow). |
 
@@ -81,3 +82,4 @@ Each milestone ends with something you can open on your phone and test.
 - 2026-11-18: Owner feedback: list header too crowded on phone. Moved Refresh and Options to a bottom toolbar; back link on its own line.
 - 2026-11-18: Owner feedback round: options behind one ⋯ button, favourite chosen from that menu, star only on the favourite, tabs hidden inside a list, cow app icon, fixed grazing/pecking frames that cut animals' heads off.
 - 2026-11-18: Updates now apply themselves: the app checks for a new version each time it's opened (and every 30 min) and reloads onto it. Account panel shows the version (e.g. 0.6.0 · abc1234).
+- 2026-11-18: Owner picked frame option B (pixel corners) from 3 mockups. Wooden rods removed.

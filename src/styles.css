@@ -197,3 +197,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .b-gold { background: var(--gold); color: var(--ink); text-shadow: none; box-shadow: inset 3px 3px 0 #fff0a0, inset -3px -3px 0 #c98a00; }
 /* With no tab bar, keep the scroll clear of the iPhone home bar. */
 .app > .scroll:last-child { margin-bottom: calc(26px + env(safe-area-inset-bottom)); }
+
+/* ---- List frame: "pixel corners" (owner choice B, 2026-11-18) ----
+   No wooden rods. A thin tan edge (a darker shade of the parchment) with stepped corners and a soft
+   shadow, drawn from a tiny 7x7 pixel image (src/ui/frame.svg) stretched around the box. */
+.scroll { border: 9px solid transparent; border-image: url("./ui/frame.svg") 3 fill / 9px / 0 stretch;
+  background: none; box-shadow: none; margin: 16px 11px calc(15px + env(safe-area-inset-bottom)); image-rendering: pixelated; }
+.scroll::before, .scroll::after { display: none; }
+.app > .scroll:not(:last-child) { margin-bottom: 15px; }
+.scroll-body { padding: 8px 8px 12px; }
+.sticky { top: -8px; }
