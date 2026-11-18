@@ -75,3 +75,31 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .tab { flex: 1; font-family: var(--pixel); font-size: 11px; padding: 14px 0; border: 3px solid var(--ink);
   background: var(--wood); color: #ffe9b8; box-shadow: inset 3px 3px 0 var(--wood-light), inset -3px -3px 0 var(--wood-dark); }
 .tab.on { background: var(--gold); color: var(--ink); box-shadow: inset 3px 3px 0 #fff0a0, inset -3px -3px 0 #c98a00; }
+
+/* ---- Forms and account (Milestone 2) ---- */
+.form { display: flex; flex-direction: column; gap: 14px; }
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field span { font-family: var(--pixel); font-size: 10px; }
+.field input { font-family: var(--readable); font-size: 18px; padding: 12px; color: var(--ink); background: #fffaf0;
+  border: 3px solid var(--ink); box-shadow: inset 3px 3px 0 var(--parchment-edge); border-radius: 0; outline: none; -webkit-appearance: none; }
+.field input:focus { border-color: var(--blue); }
+.msg { font-family: var(--readable); font-size: 16px; line-height: 1.4; padding: 10px 12px; border: 3px solid var(--ink); }
+.msg-error { background: #ffd9d4; }
+.msg-info { background: #d6eeff; }
+.msg-good { background: #d9f5c8; }
+.wide { width: 100%; }
+.btn:disabled { opacity: .6; }
+.b-green { background: var(--grass); box-shadow: inset 3px 3px 0 #a8f080, inset -3px -3px 0 #2e7a12; }
+.b-red { background: var(--red); box-shadow: inset 3px 3px 0 #ff9ea4, inset -3px -3px 0 #8a1018; }
+.links { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; margin-top: 18px; }
+.link { background: none; border: none; font-family: var(--readable); font-size: 17px; color: #1a6ab0; text-decoration: underline; text-underline-offset: 3px; padding: 2px 0; }
+.av { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 4px; font-family: var(--pixel); font-size: 10px;
+  background: var(--gold); border: 3px solid var(--ink); color: var(--ink); vertical-align: middle; }
+.me { background: none; border: none; padding: 0; }
+.me .av { min-width: 44px; height: 44px; font-size: 13px; box-shadow: 3px 3px 0 var(--ink); }
+.preview { font-family: var(--readable); font-size: 16px; display: flex; align-items: center; gap: 8px; }
+.account { display: flex; flex-direction: column; gap: 14px; }
+.account .back { align-self: flex-start; }
+.account-email { font-family: var(--readable); font-size: 15px; word-break: break-all; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; }
+.row .btn { flex: 1; }

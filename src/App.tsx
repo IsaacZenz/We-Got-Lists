@@ -1,54 +1,64 @@
 import { useEffect, useState } from "react";
-import { Meadow } from "./scene/Meadow";
+import { useAuth } from "./auth/useAuth";
+import { AuthScreen } from "./auth/AuthScreen";
+import { NewPasswordScreen } from "./auth/NewPasswordScreen";
+import { NameForm } from "./profile/NameScreen";
+import { loadMyProfile, type Profile } from "./profile/profile";
+import { AccountPanel } from "./AccountPanel";
+import { Message, Shell, Title } from "./ui/Shell";
 import { PixelIcon } from "./ui/PixelIcon";
-import { checkConnection, type ConnectionStatus } from "./supabase";
-
-const HELP: Record<string, string> = {
-  "schema-not-exposed": "Supabase isn't sharing the 'wgl' tables yet. In Supabase: Integrations → Data API → Settings tab → Exposed schemas → tick wgl → Save.",
-  "setup-script-not-run": "The database setup script hasn't been run yet. Paste supabase/001-setup.sql into Supabase's SQL Editor and press Run.",
-  offline: "Couldn't reach Supabase. Check your internet connection.",
-  other: "Something unexpected went wrong talking to Supabase.",
-};
+import { friendlyAuthError } from "./auth/messages";
 
 export function App() {
-  const [status, setStatus] = useState<ConnectionStatus | null>(null);
+  const { session, loading, recovering, doneRecovering } = useAuth();
+  const [profile, setProfile] = useState<Profile | null | undefined>(undefined); // undefined = still loading
+  const [profileError, setProfileError] = useState("");
   const [tab, setTab] = useState<"mine" | "shared">("mine");
-  const recheck = () => { setStatus(null); checkConnection().then(setStatus); };
-  useEffect(recheck, []);
+  const [showAccount, setShowAccount] = useState(false);
+  const userId = session?.user.id;
+
+  useEffect(() => {
+    setProfile(undefined); setProfileError("");
+    if (!userId) return;
+    loadMyProfile(userId).then(setProfile).catch(e => setProfileError(friendlyAuthError(e.message)));
+  }, [userId]);
+
+  if (loading) return <Shell><Title>LOADING…</Title></Shell>;
+  if (recovering && session) return <NewPasswordScreen onDone={doneRecovering} />;
+  if (!session) return <AuthScreen />;
+
+  if (profileError) return (
+    <Shell><Title>UH OH</Title><Message kind="error">{profileError}</Message>
+      <button className="btn b-blue" onClick={() => location.reload()}>TRY AGAIN</button></Shell>
+  );
+  if (profile === undefined) return <Shell><Title>LOADING…</Title></Shell>;
+  if (profile === null) return <Shell><NameForm userId={session.user.id} onSaved={setProfile} /></Shell>;
+
+  const corner = (
+    <button className="me" onClick={() => setShowAccount(s => !s)} aria-label="Your account">
+      <span className="av">{profile.initials}</span>
+    </button>
+  );
+  const tabs = (
+    <nav className="tabs">
+      <button className={`tab ${tab === "mine" ? "on" : ""}`} onClick={() => { setTab("mine"); setShowAccount(false); }}>MY LISTS</button>
+      <button className={`tab ${tab === "shared" ? "on" : ""}`} onClick={() => { setTab("shared"); setShowAccount(false); }}>SHARED</button>
+    </nav>
+  );
 
   return (
-    <div className="app">
-      <div className="sky">
-        <Meadow />
-        <header className="top">
-        <h1 className="logo"><span className="logo-1">WE GOT</span><span className="logo-2">LISTS</span></h1>
-        <div className="badge"><PixelIcon name="people" px={2} /> 1</div>
-        </header>
-        <div className="scene" />
-      </div>
-
-      <main className="scroll">
-        <div className="scroll-body">
-          <div className="win-head">
-            <PixelIcon name="star" />
-            <h2>WELCOME!</h2>
-          </div>
-          <p className="note">The meadow is open. Lists, sign-in and sharing arrive in the next milestones.</p>
-
-          <div className={`status ${status ? (status.ok ? "good" : "bad") : "wait"}`} data-testid="status">
-            {status === null && "CHECKING SUPABASE…"}
-            {status?.ok && "● CONNECTED TO SUPABASE"}
-            {status && !status.ok && <>✕ NOT CONNECTED<p className="help">{HELP[status.reason]}</p><code>{status.detail}</code></>}
-          </div>
-          <button className="btn b-blue" onClick={recheck}>CHECK AGAIN</button>
+    <Shell corner={corner} tabs={tabs}>
+      {showAccount ? (
+        <AccountPanel email={session.user.email ?? ""} profile={profile} onProfile={setProfile} onClose={() => setShowAccount(false)} />
+      ) : (
+        <>
+          <Title icon={<PixelIcon name="star" />}>HI, {profile.display_name.toUpperCase()}!</Title>
+          <p className="note">
+            {tab === "mine" ? "Your lists will live here. Making lists arrives in the next milestone." : "Lists shared with friends will show up here."}
+          </p>
           <p className="version">v{__APP_VERSION__}</p>
-        </div>
-      </main>
-
-      <nav className="tabs">
-        <button className={`tab ${tab === "mine" ? "on" : ""}`} onClick={() => setTab("mine")}>MY LISTS</button>
-        <button className={`tab ${tab === "shared" ? "on" : ""}`} onClick={() => setTab("shared")}>SHARED</button>
-      </nav>
-    </div>
+        </>
+      )}
+    </Shell>
   );
 }

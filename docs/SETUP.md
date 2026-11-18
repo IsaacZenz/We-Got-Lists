@@ -21,3 +21,23 @@
 3. Open it from the new icon. The scroll should say **● CONNECTED TO SUPABASE**.
 
 If it says NOT CONNECTED, the message underneath tells you which step was missed. Fix it and tap **CHECK AGAIN**.
+
+---
+
+# Milestone 2: accounts
+
+## 4. Run the accounts script
+Supabase → **SQL Editor** → **New query** → paste all of `supabase/002-accounts.sql` → **Run**.
+It adds a `wgl.profiles` table (your display name + initials). Coconut-Water is not touched.
+
+## 5. Let Supabase emails link back to this app
+Confirmation and password-reset emails must be allowed to open We Got Lists.
+1. Supabase → **Authentication** → **URL Configuration**.
+2. Under **Redirect URLs**, click **Add URL** and add:
+   `https://isaaczenz.github.io/We-Got-Lists/**`
+3. **Do not change the "Site URL"** — it belongs to Rate My Coconut Water.
+
+## Good to know
+- Your Rate My Coconut Water email + password already works here (shared sign-in).
+- On iPhone, the Home Screen app keeps its own sign-in, separate from Safari. Sign in inside the installed app.
+- Email links open in Safari. After confirming your email, go back to the app and sign in.

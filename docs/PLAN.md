@@ -7,7 +7,7 @@
 | Platform | Installable website (PWA), mainly for iPhone. Open in Safari → Share → "Add to Home Screen". |
 | Hosting | GitHub Pages at https://isaaczenz.github.io/We-Got-Lists/, deployed by GitHub Actions (`.github/workflows/deploy.yml`) on every push. |
 | Backend | Supabase: accounts, database, live updates. Shares the **Coconut-Water** project (`vhipoagjztecsobfrjsz`); all tables in a separate `wgl` schema. Same email/password signs in to both apps. |
-| Sign-in | Email + password (with "forgot password" email). |
+| Sign-in | Email + password (with "forgot password" email). Shared with Rate My Coconut Water: same login works for both. Minimum 8 characters for new passwords. On first sign-in the app asks for a display name; initials are made from it. No trigger on `auth.users` (it would fire for Coconut-Water sign-ups too). |
 | Tabs | **My Lists** (not shared) and **Shared**. Sharing a list moves it to Shared. |
 | Primary list | Star icon. Personal to each user, one star per user, any list (shared or not). Opens on app launch. |
 | Items | Text only. Crossed-off items drop to a "Got it!" section at the bottom. Each item can be deleted. |
@@ -42,7 +42,7 @@ iPhone (PWA from GitHub Pages)  ⇄  Supabase
 ```
 
 ### Database tables
-- `profiles` — id (= auth user), display_name, initials, primary_list_id
+- `profiles` — id (= auth user), display_name, initials (primary list is stored per member in `list_members`, Milestone 3)
 - `lists` — id, name, owner_id, created_at
 - `list_members` — list_id, user_id, joined_at  (a list is "shared" when it has more than one member)
 - `items` — id, list_id, text, done, done_at, position, added_by, created_at
@@ -58,7 +58,7 @@ Each milestone ends with something you can open on your phone and test.
 
 - [x] **0. Agree the plan + mockups**: this document and `docs/mockups/`.
 - [x] **1. Skeleton + deploy**: Vite + React + TypeScript app, deployed to GitHub Pages, connected to your Supabase project. *Done when:* the site loads on your iPhone and can be added to the Home Screen.
-- [ ] **2. Accounts**: sign up, sign in, sign out, forgot password, set display name. *Done when:* you can make an account on your phone and stay signed in.
+- [x] **2. Accounts**: sign up, sign in, sign out, forgot password, set display name. *Done when:* you can make an account on your phone and stay signed in.
 - [ ] **3. My lists**: create/rename/delete lists, add/cross off/delete/drag-to-reorder items, both clear buttons, star primary list, in the Meadow look (with cows).
 - [ ] **4. Sharing**: invite link, join a list, Shared tab, member badges, friends quick-add, leave list.
 - [ ] **5. Live + hearts**: realtime updates, pull-to-refresh, hearts with counts and "who hearted".
@@ -69,3 +69,4 @@ Each milestone ends with something you can open on your phone and test.
 - 2026-11-17: Meadow look chosen. Added cows + pterodactyl scene, readable list font, striped rows, drag-to-reorder, bottom tab bar (`d-meadow-v2.html/.png/.gif`).
 - 2026-11-18: Fixed backwards-walking cows; added chickens (pterodactyl picks cow or chicken). Decided to share an existing Supabase project.
 - 2026-11-18: Milestone 1 built: Vite + React + TypeScript app with the live meadow scene, Supabase connection check (`wgl.ping`), PWA install support, GitHub Pages deploy workflow. Owner still to: enable Pages, run `supabase/001-setup.sql`, expose the `wgl` schema.
+- 2026-11-18: Milestone 2 built: sign in / create account / forgot + new password / display name / account panel / sign out. `supabase/002-accounts.sql`. Tested with a fake Supabase in Playwright; owner to test against the real one.
