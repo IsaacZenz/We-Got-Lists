@@ -9,7 +9,7 @@
 | Backend | Supabase: accounts, database, live updates. Shares the **Coconut-Water** project (`vhipoagjztecsobfrjsz`); all tables in a separate `wgl` schema. Same email/password signs in to both apps. |
 | Sign-in | Email + password (with "forgot password" email). Shared with Rate My Coconut Water: same login works for both. Minimum 8 characters for new passwords. On first sign-in the app asks for a display name; initials are made from it. No trigger on `auth.users` (it would fire for Coconut-Water sign-ups too). |
 | Tabs | **My Lists** (not shared) and **Shared**. Sharing a list moves it to Shared. |
-| Primary list | Star icon. Personal to each user, one star per user, any list (shared or not). Opens on app launch. Tap a lit star to un-star. Stored as `profiles.primary_list_id`. |
+| Favourite (primary) list | (Owner, 2026-11-18) Chosen from the list's ⋯ menu ("Make favourite" / "Remove favourite"). A star appears **only** next to the favourite list — no grey stars elsewhere. One per person, any list. Opens on app launch. Stored as `profiles.primary_list_id`. |
 | Items | Text only. Crossed-off items drop to a "Got it!" section at the bottom. Each item can be deleted. |
 | Reordering | Drag an item by its grip handle (⠿ on the left) to move it. Order is saved and shared with everyone on the list. Only unchecked items are reordered. Positions are decimals: a moved item gets the midpoint of its neighbours, so only that one row changes. |
 | Adding items | New items go to the bottom of the to-get section. The text box keeps focus so you can type several in a row. |
@@ -23,11 +23,12 @@
 | Hearts | Shared lists only. Many people can heart one item. Red heart = you hearted it, pink = others did. Tap the count to see who. |
 | Offline | The whole app (code, fonts, icons) is saved on the phone. Last-loaded lists/items show without signal. Item changes (add, cross off, delete, reorder, clear, heart) wait in an outbox and send when signal returns. Making/renaming/deleting lists, starring and sharing need a connection and say so. Signing out clears the phone's saved copy. |
 | Look | **Meadow** (2026-11-17): sky + grass, list on a parchment scroll, wooden buttons. See `docs/mockups/d-meadow-v2.*`. |
+| App icon | (Owner, 2026-11-18) A pixel-art cow face on sky and grass. Drawn by `scripts/make-icons.py`. |
 | Meadow scene | A strip of meadow under the logo with cows and chickens wandering (each faces the way it walks). Every 20 seconds a pterodactyl swoops down and carries off a randomly chosen cow or chicken; a new one wanders in. Original sprites. Timing numbers live in `MEADOW` in `src/scene/meadow.ts`. |
 | Fonts (bundled in the app, not from Google, so they work offline) | Blocky pixel font ("Press Start 2P") for headings/buttons, "Pixelify Sans" for small text, and a clean readable font ("Nunito" bold) for list item text only. |
 | Rows | Alternating parchment shades on list rows. |
-| List header | (Owner, 2026-11-18) "◀ All lists" on its own line; star + list name get the full row. Refresh and Options (rename / share / delete) live in a toolbar at the bottom of the list. |
-| Tabs | My Lists / Shared tab bar sits at the **bottom** of the screen (thumb-reachable, iPhone convention, frees space for the meadow). |
+| List header | (Owner, 2026-11-18) "◀ All lists" on its own line; star (if favourite) + list name get the full row. A single ⋯ button at the bottom of the list opens: Refresh, Make/Remove favourite, Share (or People & sharing), Rename, Delete. |
+| Tabs | (Owner, 2026-11-18) Only shown on the all-lists screen, hidden while a list is open. My Lists / Shared tab bar sits at the **bottom** of the screen (thumb-reachable, iPhone convention, frees space for the meadow). |
 
 ### Open questions
 - **Deleting a shared list:** with "anyone can do anything", one person could delete a list for everyone.
@@ -78,3 +79,4 @@ Each milestone ends with something you can open on your phone and test.
 - 2026-11-18: Milestones 4–6 built together (owner asked): invite links, join, friends quick-add, leave / delete for everyone, initials on items, hearts, Realtime live updates, pull-to-refresh, offline outbox + saved copy, bundled fonts. `supabase/004-sharing-hearts-live.sql`. Checks: 40 unit tests, 13-step list walkthrough, 19-step sharing/offline walkthrough (fake Supabase). Live updates between two real phones not testable here.
 - 2026-11-18: Checked the live Supabase project through the connector: scripts 001–004 all applied, RLS on every table, Realtime on. Applied `005-hardening.sql`. Ran a 17-check security test as two pretend users inside a rolled-back transaction: all passed, nothing left behind.
 - 2026-11-18: Owner feedback: list header too crowded on phone. Moved Refresh and Options to a bottom toolbar; back link on its own line.
+- 2026-11-18: Owner feedback round: options behind one ⋯ button, favourite chosen from that menu, star only on the favourite, tabs hidden inside a list, cow app icon, fixed grazing/pecking frames that cut animals' heads off.

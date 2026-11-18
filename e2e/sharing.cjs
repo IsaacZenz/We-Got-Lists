@@ -77,10 +77,11 @@ const URL = "http://localhost:4173/We-Got-Lists/";
   await p.click("button:has-text('+ ADD')"); await p.waitForTimeout(400);
   step("adding a friend puts them on the list", fake.db.members.some(m => m.user_id === jo.id && fake.db.lists.find(l => l.id === m.list_id)?.name === "Groceries"));
   await p.click("text=◀ Back to the list"); await p.waitForTimeout(500);
-  step("the list now counts as shared", (await p.locator(".tab.on").textContent()) === "SHARED");
+  await p.click("button[aria-label='All lists']"); await p.waitForTimeout(300);
+  step("the list now counts as shared", (await p.locator(".tab.on").textContent()) === "SHARED" && await p.isVisible("text=Groceries"));
 
   // ---- Leave a shared list
-  await p.click("button[aria-label='All lists']"); await p.click("text=Weekend BBQ");
+  await p.click("text=Weekend BBQ");
   await p.click("button[aria-label='List options']"); await p.click("text=PEOPLE & SHARING");
   await p.click("text=LEAVE THIS LIST"); await p.click(".dialog button:has-text('LEAVE')");
   await p.waitForTimeout(500);

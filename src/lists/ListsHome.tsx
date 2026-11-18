@@ -15,8 +15,8 @@ export type Tab = "mine" | "shared";
 const isShared = (l: List) => l.memberCount > 1;
 
 /** The lists part of the app: the overview for the current tab, or one open list. */
-export function ListsHome({ profile, onProfile, tab, setTab }:
-  { profile: Profile; onProfile: (p: Profile) => void; tab: Tab; setTab: (t: Tab) => void }) {
+export function ListsHome({ profile, onProfile, tab, setTab, onListOpen }:
+  { profile: Profile; onProfile: (p: Profile) => void; tab: Tab; setTab: (t: Tab) => void; onListOpen: (open: boolean) => void }) {
   const [lists, setLists] = useState<List[] | null>(() => readCache(profile.id).lists ?? null);
   const [openId, setOpenId] = useState<string | null>(null);
   const [error, setError] = useState("");
@@ -74,13 +74,16 @@ export function ListsHome({ profile, onProfile, tab, setTab }:
   function openIn(t: Tab, id: string) { lastTab.current = t; setTab(t); setOpenId(id); }
 
   const pull = usePullToRefresh(reload);
+  // The My Lists / Shared tabs only show on the "all lists" screen.
+  const isOpen = !!lists?.some(l => l.id === openId);
+  useEffect(() => { onListOpen(isOpen); }, [isOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   async function star(id: string) {
-    const next = profile.primary_list_id === id ? null : id; // tapping the lit star turns it off
+    const next = profile.primary_list_id === id ? null : id; // choosing it again removes the favourite
     const before = profile;
     onProfile({ ...profile, primary_list_id: next });
     try { await api.setPrimaryList(profile.id, next); }
-    catch (e) { onProfile(before); setNotice({ kind: "error", text: isNetworkError(e) ? "You're offline. Starring needs a connection." : (e as Error).message }); }
+    catch (e) { onProfile(before); setNotice({ kind: "error", text: isNetworkError(e) ? "You're offline. Changing your favourite needs a connection." : (e as Error).message }); }
   }
 
   async function create(name: string) {
@@ -125,7 +128,7 @@ export function ListsHome({ profile, onProfile, tab, setTab }:
       {banner}
       {offline && <Message kind="info">You're offline. Showing what was saved on this phone.</Message>}
       <ListsOverview lists={lists.filter(l => isShared(l) === (tab === "shared"))} primaryId={profile.primary_list_id}
-        shared={tab === "shared"} onOpen={setOpenId} onStar={star} onCreate={create} />
+        shared={tab === "shared"} onOpen={setOpenId} onCreate={create} />
     </div>
   );
 }

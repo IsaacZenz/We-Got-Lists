@@ -18,6 +18,7 @@ export function App() {
   const [profileError, setProfileError] = useState("");
   const [tab, setTab] = useState<Tab>("mine");
   const [showAccount, setShowAccount] = useState(false);
+  const [listOpen, setListOpen] = useState(false);
   const userId = session?.user.id;
 
   useEffect(() => {
@@ -61,11 +62,11 @@ export function App() {
   );
 
   return (
-    <Shell corner={corner} tabs={tabs}>
+    <Shell corner={corner} tabs={listOpen && !showAccount ? undefined : tabs}>
       {showAccount ? (
         <AccountPanel email={session.user.email ?? ""} profile={profile} onProfile={updateProfile} onClose={() => setShowAccount(false)} />
       ) : (
-        <ListsHome profile={profile} onProfile={updateProfile} tab={tab} setTab={setTab} />
+        <ListsHome profile={profile} onProfile={updateProfile} tab={tab} setTab={setTab} onListOpen={setListOpen} />
       )}
     </Shell>
   );

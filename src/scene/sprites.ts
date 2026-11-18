@@ -47,18 +47,27 @@ const CHICKEN_LEGS: Grid[] = [
   ["....yy.....", "...yy.y...."],
 ];
 
+// Grazing: the same cow with its head (everything right of the neck) lowered 2 pixels.
+// (The old version deleted the top rows instead, which cut the head off.)
+const HEAD_COL = 12;
+const COW_GRAZE: Grid = COW_BODY.map((row, y) => {
+  const body = y < 2 ? ".".repeat(HEAD_COL) : row.slice(0, HEAD_COL);
+  const head = y >= 2 ? COW_BODY[y - 2].slice(HEAD_COL) : ".".repeat(row.length - HEAD_COL);
+  return body + head;
+});
+
 /** Cow: `step` picks the leg frame, `graze` lowers the head. */
 export function cowGrid(step: number, graze = false): Grid {
-  const body = graze ? COW_BODY.map((r, i) => (i < 2 ? "" : r)) : COW_BODY;
-  return body.concat(COW_LEGS[step % 2]);
+  return (graze ? COW_GRAZE : COW_BODY).concat(COW_LEGS[step % 2]);
 }
+
+// Pecking: the head (right of column 5) dips down one pixel. Whole head, nothing cut off.
+const CHICKEN_PECK: Grid = CHICKEN_BODY.map((row, y) =>
+  y < 4 ? row.slice(0, 5) + (y === 0 ? ".".repeat(row.length - 5) : CHICKEN_BODY[y - 1].slice(5)) : row);
 
 /** Chicken: `step` picks the leg frame, `peck` dips the head. */
 export function chickenGrid(step: number, peck = false): Grid {
-  const body = peck
-    ? CHICKEN_BODY.map((r, i) => (i < 3 ? "" : i === 3 ? "k....kwwwyy" : r))
-    : CHICKEN_BODY;
-  return body.concat(CHICKEN_LEGS[step % 2]);
+  return (peck ? CHICKEN_PECK : CHICKEN_BODY).concat(CHICKEN_LEGS[step % 2]);
 }
 
 /** Pterodactyl. This one faces LEFT in the grid (it flies left by default). */

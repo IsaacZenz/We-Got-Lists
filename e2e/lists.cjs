@@ -32,13 +32,18 @@ require("fs").mkdirSync(OUT, { recursive: true });
   step("input keeps focus after adding", await p.evaluate(() => document.activeElement?.getAttribute("aria-label") === "New item"));
   await p.click("button[aria-label='Cross off Coffee beans']");
   await p.click("button[aria-label='Cross off Paper towels']");
-  await p.click("button[aria-label='Make this my primary list']");
+  step("no star before choosing a favourite", (await p.locator(".fav-star").count()) === 0);
+  step("options are hidden until ⋯ is tapped", !(await p.isVisible("text=MAKE FAVOURITE")));
+  await p.click("button[aria-label='List options']"); await p.click("text=MAKE FAVOURITE");
+  step("favourite shows a star by the name", (await p.locator(".win-head .fav-star").count()) === 1);
+  step("tabs are hidden while a list is open", (await p.locator(".tabs").count()) === 0);
   await p.waitForTimeout(300);
   step("crossed items move to GOT IT", (await p.textContent(".sep")).includes("(2)"));
   await p.evaluate(() => document.activeElement.blur());
   await shot("m3-2-list");
 
-  // Drag "Bananas" (3rd) to the top by its grip.
+  // Drag "Bananas" (3rd) to the top by its grip (scroll to the top first, like a person would).
+  await p.evaluate(() => document.querySelector(".scroll-body").scrollTo(0, 0)); await p.waitForTimeout(300);
   const grip = await p.locator("button[aria-label='Move Bananas']").boundingBox();
   const first = await p.locator("button[aria-label='Move Eggs (dozen)']").boundingBox();
   await p.mouse.move(grip.x + grip.width / 2, grip.y + grip.height / 2); await p.mouse.down();
@@ -65,6 +70,8 @@ require("fs").mkdirSync(OUT, { recursive: true });
   await p.fill("input[aria-label='New list name']", "Hardware store"); await p.click("button[aria-label='Make list']");
   await p.waitForSelector("h2.list-title:has-text('Hardware store')");
   await p.click("button[aria-label='All lists']"); await shot("m3-5-overview");
+  step("tabs are back on the all-lists screen", (await p.locator(".tabs").count()) === 1);
+  step("only the favourite has a star in the overview", (await p.locator(".lists .fav-star").count()) === 1);
   await p.reload(); await p.waitForSelector("h2.list-title");
   step("starred list opens on launch", (await p.textContent("h2.list-title")) === "Groceries");
 

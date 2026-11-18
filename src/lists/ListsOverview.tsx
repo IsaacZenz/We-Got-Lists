@@ -3,10 +3,10 @@ import type { List } from "./types";
 import { PixelIcon } from "../ui/PixelIcon";
 import { Title } from "../ui/Shell";
 
-/** All your lists in this tab, with stars, plus a box to make a new one. */
-export function ListsOverview({ lists, primaryId, shared, onOpen, onStar, onCreate }: {
+/** All your lists in this tab (a star marks your favourite), plus a box to make a new one. */
+export function ListsOverview({ lists, primaryId, shared, onOpen, onCreate }: {
   lists: List[]; primaryId: string | null; shared: boolean;
-  onOpen: (id: string) => void; onStar: (id: string) => void; onCreate: (name: string) => Promise<void>;
+  onOpen: (id: string) => void; onCreate: (name: string) => Promise<void>;
 }) {
   const [name, setName] = useState("");
   const [busy, setBusy] = useState(false);
@@ -29,10 +29,8 @@ export function ListsOverview({ lists, primaryId, shared, onOpen, onStar, onCrea
       <ul className="lists">
         {lists.map(l => (
           <li key={l.id}>
-            <button className="star-btn" onClick={() => onStar(l.id)} aria-label={l.id === primaryId ? "Primary list (tap to unstar)" : "Make this my primary list"}>
-              <PixelIcon name={l.id === primaryId ? "star" : "starOff"} />
-            </button>
             <button className="list-open" onClick={() => onOpen(l.id)}>
+              {l.id === primaryId && <span className="fav-star" title="Your favourite list"><PixelIcon name="star" px={2} /></span>}
               <span className="list-name">{l.name}</span>
               {shared && <span className="ppl"><PixelIcon name="people" px={1} /> {l.memberCount}</span>}
               <span className="count">{l.remaining}</span>

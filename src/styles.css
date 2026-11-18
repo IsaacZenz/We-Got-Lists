@@ -187,3 +187,13 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .toolbar { display: flex; gap: 8px; margin-top: 18px; padding-top: 12px; border-top: 3px dashed var(--parchment-edge); }
 .toolbar .btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 9px; }
 .toolbar + .menu { margin-top: 10px; }
+
+/* Favourite star (only on the favourite list) and the bottom "⋯" options button. */
+.fav-star { display: grid; place-items: center; flex: none; }
+.more-row { display: flex; justify-content: center; margin-top: 16px; padding-top: 10px; border-top: 3px dashed var(--parchment-edge); }
+.more-btn { background: var(--parchment-2); border: 3px solid var(--ink); padding: 10px 18px; display: grid; place-items: center; }
+.more-btn.open { background: var(--gold); }
+.menu-btns .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.b-gold { background: var(--gold); color: var(--ink); text-shadow: none; box-shadow: inset 3px 3px 0 #fff0a0, inset -3px -3px 0 #c98a00; }
+/* With no tab bar, keep the scroll clear of the iPhone home bar. */
+.app > .scroll:last-child { margin-bottom: calc(26px + env(safe-area-inset-bottom)); }

@@ -15,7 +15,7 @@ import { isNetworkError } from "../data/net";
 
 type Ask = null | "clear-all" | "delete-list";
 
-/** One list: add, cross off, delete, drag to reorder, clear, star, rename, share, hearts. */
+/** One list: add, cross off, delete, drag to reorder, clear, favourite, rename, share, hearts. */
 export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, onGone, onCountChange, onMembersChange }: {
   list: List; userId: string; isPrimary: boolean;
   onBack: () => void; onStar: () => void; onRenamed: (name: string) => void; onGone: () => void;
@@ -96,9 +96,7 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
       <PullIndicator {...pull} />
       <button className="link back-link" onClick={onBack} aria-label="All lists"><PixelIcon name="back" px={2} /> All lists</button>
       <div className="win-head">
-        <button className="star-btn" onClick={onStar} aria-label={isPrimary ? "Primary list (tap to unstar)" : "Make this my primary list"}>
-          <PixelIcon name={isPrimary ? "star" : "starOff"} />
-        </button>
+        {isPrimary && <span className="fav-star" title="Your favourite list"><PixelIcon name="star" /></span>}
         <h2 className="list-title">{list.name}</h2>
       </div>
 
@@ -142,14 +140,18 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
         </>
       )}
 
-      <div className="toolbar">
-        <button className="btn b-wood" onClick={() => void data.refresh()} aria-label="Refresh"><PixelIcon name="refresh" px={2} /> REFRESH</button>
-        <button className="btn b-wood" onClick={() => setMenu(m => !m)} aria-label="List options" aria-expanded={menu}><PixelIcon name="dots" px={2} /> OPTIONS</button>
+      <div className="more-row">
+        <button className={`more-btn ${menu ? "open" : ""}`} onClick={() => { setMenu(m => !m); setRenaming(null); }}
+          aria-label="List options" aria-expanded={menu}><PixelIcon name="dots" px={3} /></button>
       </div>
       {menu && (
         <div className="menu" ref={menuRef}>
           {renaming === null ? (
             <div className="menu-btns">
+              <button className="btn b-wood" onClick={() => { void data.refresh(); setMenu(false); }} aria-label="Refresh"><PixelIcon name="refresh" px={2} /> REFRESH</button>
+              <button className="btn b-gold" onClick={() => { onStar(); setMenu(false); }}>
+                {isPrimary ? "REMOVE FAVOURITE" : <><PixelIcon name="star" px={2} /> MAKE FAVOURITE</>}
+              </button>
               <button className="btn b-blue" onClick={() => { setPeople(true); setMenu(false); }}>{shared ? "PEOPLE & SHARING" : "SHARE THIS LIST"}</button>
               <button className="btn b-wood" onClick={() => setRenaming(list.name)}>RENAME</button>
               <button className="btn b-red" onClick={() => setAsk("delete-list")}>{shared ? "DELETE FOR EVERYONE" : "DELETE LIST"}</button>
