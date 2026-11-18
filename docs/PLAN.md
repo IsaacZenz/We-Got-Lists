@@ -5,8 +5,8 @@
 | Topic | Decision |
 |---|---|
 | Platform | Installable website (PWA), mainly for iPhone. Open in Safari → Share → "Add to Home Screen". |
-| Hosting | GitHub Pages, deployed automatically by GitHub Actions on every push to `main`. |
-| Backend | Supabase: accounts, database, live updates. Shares one of the owner's existing projects; all tables in a separate `wgl` schema. |
+| Hosting | GitHub Pages at https://isaaczenz.github.io/We-Got-Lists/, deployed by GitHub Actions (`.github/workflows/deploy.yml`) on every push. |
+| Backend | Supabase: accounts, database, live updates. Shares the **Coconut-Water** project (`vhipoagjztecsobfrjsz`); all tables in a separate `wgl` schema. Same email/password signs in to both apps. |
 | Sign-in | Email + password (with "forgot password" email). |
 | Tabs | **My Lists** (not shared) and **Shared**. Sharing a list moves it to Shared. |
 | Primary list | Star icon. Personal to each user, one star per user, any list (shared or not). Opens on app launch. |
@@ -20,7 +20,7 @@
 | Hearts | Shared lists only. Many people can heart one item. Shows filled heart + count; tap to see who. |
 | Offline | Shows the last-loaded lists without signal; changes made offline are saved and sent when signal returns. |
 | Look | **Meadow** (2026-11-17): sky + grass, list on a parchment scroll, wooden buttons. See `docs/mockups/d-meadow-v2.*`. |
-| Meadow scene | A strip of meadow under the logo with cows and chickens wandering (each faces the way it walks). Every so often a pterodactyl swoops down and carries off a randomly chosen cow or chicken; a new one wanders in. Original sprites. |
+| Meadow scene | A strip of meadow under the logo with cows and chickens wandering (each faces the way it walks). Every 20 seconds a pterodactyl swoops down and carries off a randomly chosen cow or chicken; a new one wanders in. Original sprites. Timing numbers live in `MEADOW` in `src/scene/meadow.ts`. |
 | Fonts | Blocky pixel font ("Press Start 2P") for headings/buttons, "Pixelify Sans" for small text, and a clean readable font ("Nunito" bold) for list item text only. |
 | Rows | Alternating parchment shades on list rows. |
 | Tabs | My Lists / Shared tab bar sits at the **bottom** of the screen (thumb-reachable, iPhone convention, frees space for the meadow). |
@@ -29,7 +29,7 @@
 - **Deleting a shared list:** with "anyone can do anything", one person could delete a list for everyone.
   Suggested default: on a shared list the menu offers **Leave list** for everyone, and **Delete for everyone** with a confirm. *Default if no answer: that.*
 - **Light/dark:** pixel themes are usually one fixed palette. *Default: no separate dark mode.*
-- **Supabase:** share an existing project (owner decision 2026-11-18). We Got Lists tables live in their own `wgl` schema. Waiting on: which project + its URL and publishable key.
+
 
 ## How it fits together
 
@@ -57,7 +57,7 @@ iPhone (PWA from GitHub Pages)  ⇄  Supabase
 Each milestone ends with something you can open on your phone and test.
 
 - [x] **0. Agree the plan + mockups**: this document and `docs/mockups/`.
-- [ ] **1. Skeleton + deploy**: Vite + React + TypeScript app, deployed to GitHub Pages, connected to your Supabase project. *Done when:* the site loads on your iPhone and can be added to the Home Screen.
+- [x] **1. Skeleton + deploy**: Vite + React + TypeScript app, deployed to GitHub Pages, connected to your Supabase project. *Done when:* the site loads on your iPhone and can be added to the Home Screen.
 - [ ] **2. Accounts**: sign up, sign in, sign out, forgot password, set display name. *Done when:* you can make an account on your phone and stay signed in.
 - [ ] **3. My lists**: create/rename/delete lists, add/cross off/delete/drag-to-reorder items, both clear buttons, star primary list, in the Meadow look (with cows).
 - [ ] **4. Sharing**: invite link, join a list, Shared tab, member badges, friends quick-add, leave list.
@@ -68,3 +68,4 @@ Each milestone ends with something you can open on your phone and test.
 - 2026-11-17: Plan agreed; three pixel-art mockups made (`docs/mockups/*.png`).
 - 2026-11-17: Meadow look chosen. Added cows + pterodactyl scene, readable list font, striped rows, drag-to-reorder, bottom tab bar (`d-meadow-v2.html/.png/.gif`).
 - 2026-11-18: Fixed backwards-walking cows; added chickens (pterodactyl picks cow or chicken). Decided to share an existing Supabase project.
+- 2026-11-18: Milestone 1 built: Vite + React + TypeScript app with the live meadow scene, Supabase connection check (`wgl.ping`), PWA install support, GitHub Pages deploy workflow. Owner still to: enable Pages, run `supabase/001-setup.sql`, expose the `wgl` schema.
