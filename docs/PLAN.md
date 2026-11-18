@@ -6,7 +6,7 @@
 |---|---|
 | Platform | Installable website (PWA), mainly for iPhone. Open in Safari → Share → "Add to Home Screen". |
 | Hosting | GitHub Pages, deployed automatically by GitHub Actions on every push to `main`. |
-| Backend | Supabase: accounts, database, live updates. |
+| Backend | Supabase: accounts, database, live updates. Shares one of the owner's existing projects; all tables in a separate `wgl` schema. |
 | Sign-in | Email + password (with "forgot password" email). |
 | Tabs | **My Lists** (not shared) and **Shared**. Sharing a list moves it to Shared. |
 | Primary list | Star icon. Personal to each user, one star per user, any list (shared or not). Opens on app launch. |
@@ -20,7 +20,7 @@
 | Hearts | Shared lists only. Many people can heart one item. Shows filled heart + count; tap to see who. |
 | Offline | Shows the last-loaded lists without signal; changes made offline are saved and sent when signal returns. |
 | Look | **Meadow** (2026-11-17): sky + grass, list on a parchment scroll, wooden buttons. See `docs/mockups/d-meadow-v2.*`. |
-| Meadow scene | A strip of meadow under the logo with cows wandering. Every so often a pterodactyl swoops down and carries a cow off; a new cow wanders in. Original sprites. |
+| Meadow scene | A strip of meadow under the logo with cows and chickens wandering (each faces the way it walks). Every so often a pterodactyl swoops down and carries off a randomly chosen cow or chicken; a new one wanders in. Original sprites. |
 | Fonts | Blocky pixel font ("Press Start 2P") for headings/buttons, "Pixelify Sans" for small text, and a clean readable font ("Nunito" bold) for list item text only. |
 | Rows | Alternating parchment shades on list rows. |
 | Tabs | My Lists / Shared tab bar sits at the **bottom** of the screen (thumb-reachable, iPhone convention, frees space for the meadow). |
@@ -29,7 +29,7 @@
 - **Deleting a shared list:** with "anyone can do anything", one person could delete a list for everyone.
   Suggested default: on a shared list the menu offers **Leave list** for everyone, and **Delete for everyone** with a confirm. *Default if no answer: that.*
 - **Light/dark:** pixel themes are usually one fixed palette. *Default: no separate dark mode.*
-- **Supabase project:** free-plan limit reached. Decide: share an existing project (separate `wgl` schema), pause one, or use another backend. *Blocks Milestone 1.*
+- **Supabase:** share an existing project (owner decision 2026-11-18). We Got Lists tables live in their own `wgl` schema. Waiting on: which project + its URL and publishable key.
 
 ## How it fits together
 
@@ -67,3 +67,4 @@ Each milestone ends with something you can open on your phone and test.
 ## Progress log
 - 2026-11-17: Plan agreed; three pixel-art mockups made (`docs/mockups/*.png`).
 - 2026-11-17: Meadow look chosen. Added cows + pterodactyl scene, readable list font, striped rows, drag-to-reorder, bottom tab bar (`d-meadow-v2.html/.png/.gif`).
+- 2026-11-18: Fixed backwards-walking cows; added chickens (pterodactyl picks cow or chicken). Decided to share an existing Supabase project.
