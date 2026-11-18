@@ -59,10 +59,11 @@ require("fs").mkdirSync(OUT, { recursive: true });
   await p.click("button[aria-label='Un-cross Coffee beans']"); await p.waitForTimeout(200);
   step("un-crossing returns it to the list", (await p.textContent(".sep")).includes("(1)"));
 
-  await p.click("text=CLEAR GOT IT"); await p.waitForTimeout(200);
+  step("clear buttons are hidden until ⋯ is tapped", !(await p.isVisible("text=CLEAR GOT IT")));
+  await p.click("button[aria-label='List options']"); await p.click("text=CLEAR GOT IT"); await p.waitForTimeout(200);
   step("clear got-it removes only crossed items", (await p.locator(".sep").count()) === 0 && (await texts()).length === 5);
 
-  await p.click("text=CLEAR ALL"); await p.waitForSelector(".dialog"); await shot("m3-4-confirm");
+  await p.click("button[aria-label='List options']"); await p.click(".menu >> text=CLEAR ALL"); await p.waitForSelector(".dialog"); await shot("m3-4-confirm");
   await p.click(".dialog >> text=CANCEL"); step("cancel keeps items", (await texts()).length === 5);
 
   // Second list, then reload: the starred list should open by itself.

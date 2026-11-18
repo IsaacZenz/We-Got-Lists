@@ -14,7 +14,7 @@
 | Reordering | Drag an item by its grip handle (⠿ on the left) to move it. Order is saved and shared with everyone on the list. Only unchecked items are reordered. Positions are decimals: a moved item gets the midpoint of its neighbours, so only that one row changes. |
 | Adding items | New items go to the bottom of the to-get section. The text box keeps focus so you can type several in a row. |
 | Deleting items | Trash icon on every item (to-get and crossed off). No confirm for single items. |
-| Clearing | Two buttons: **Clear got-it** (crossed-off only) and **Clear all** (asks "Are you sure?"). |
+| Clearing | In the list's ⋯ menu (owner, 2026-11-18): **Clear got it** (crossed-off only; greyed out when nothing is crossed off) and **Clear all** (asks "Are you sure?"). |
 | Sharing | Invite by link (⋯ → Share). Links last 14 days and open in Safari; whoever signs in joins. Anyone who shares a list with you is a "friend" you can add to other lists in one tap (no friend requests). |
 | Leaving vs deleting | Shared list menu: **People & Sharing → Leave** removes it from your phone only; **Delete for everyone** (with confirm) deletes it for all. The last person to leave deletes it. |
 | Permissions | Everyone on a shared list can do everything (add, cross off, delete, clear, rename, invite). |
@@ -28,7 +28,7 @@
 | Fonts (bundled in the app, not from Google, so they work offline) | Blocky pixel font ("Press Start 2P") for headings/buttons, "Pixelify Sans" for small text, and a clean readable font ("Nunito" bold) for list item text only. |
 | Rows | Alternating parchment shades on list rows. |
 | List frame | (Owner, 2026-11-18, option B) No wooden rods. Thin tan edge (darker parchment) with stepped "pixel" corners and a soft shadow, drawn by `src/ui/frame.svg`. Text boxes and tick boxes keep their bold outlines. |
-| List header | (Owner, 2026-11-18) "◀ All lists" on its own line; star (if favourite) + list name get the full row. A single ⋯ button at the bottom of the list opens: Refresh, Make/Remove favourite, Share (or People & sharing), Rename, Delete. |
+| List header | (Owner, 2026-11-18) "◀ All lists" on its own line; star (if favourite) + list name get the full row. A single ⋯ button at the bottom of the list opens: Refresh, Clear got it, Clear all (confirm), Make/Remove favourite, Share (or People & sharing), Rename, Delete. |
 | Tabs | (Owner, 2026-11-18) Only shown on the all-lists screen, hidden while a list is open. My Lists / Shared tab bar sits at the **bottom** of the screen (thumb-reachable, iPhone convention, frees space for the meadow). |
 
 ### Open questions
@@ -83,3 +83,4 @@ Each milestone ends with something you can open on your phone and test.
 - 2026-11-18: Owner feedback round: options behind one ⋯ button, favourite chosen from that menu, star only on the favourite, tabs hidden inside a list, cow app icon, fixed grazing/pecking frames that cut animals' heads off.
 - 2026-11-18: Updates now apply themselves: the app checks for a new version each time it's opened (and every 30 min) and reloads onto it. Account panel shows the version (e.g. 0.6.0 · abc1234).
 - 2026-11-18: Owner picked frame option B (pixel corners) from 3 mockups. Wooden rods removed.
+- 2026-11-18: Clear got it / Clear all moved into the ⋯ menu.

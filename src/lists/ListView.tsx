@@ -131,12 +131,6 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
             </>
           )}
 
-          {(active.length > 0 || done.length > 0) && (
-            <div className="row clear">
-              <button className="btn b-green" disabled={done.length === 0} onClick={() => clear(true)}>CLEAR GOT IT</button>
-              <button className="btn b-red" onClick={() => setAsk("clear-all")}>CLEAR ALL</button>
-            </div>
-          )}
         </>
       )}
 
@@ -149,6 +143,8 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
           {renaming === null ? (
             <div className="menu-btns">
               <button className="btn b-wood" onClick={() => { void data.refresh(); setMenu(false); }} aria-label="Refresh"><PixelIcon name="refresh" px={2} /> REFRESH</button>
+              <button className="btn b-green" disabled={done.length === 0} onClick={() => { clear(true); setMenu(false); }}>CLEAR GOT IT</button>
+              <button className="btn b-red" disabled={active.length + done.length === 0} onClick={() => setAsk("clear-all")}>CLEAR ALL</button>
               <button className="btn b-gold" onClick={() => { onStar(); setMenu(false); }}>
                 {isPrimary ? "REMOVE FAVOURITE" : <><PixelIcon name="star" px={2} /> MAKE FAVOURITE</>}
               </button>
@@ -167,7 +163,7 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
 
 
       {ask === "clear-all" && (
-        <Confirm title="CLEAR ALL?" yes="CLEAR ALL" onNo={() => setAsk(null)} onYes={() => { setAsk(null); clear(false); }}>
+        <Confirm title="CLEAR ALL?" yes="CLEAR ALL" onNo={() => setAsk(null)} onYes={() => { setAsk(null); setMenu(false); clear(false); }}>
           This removes every item on <b>{list.name}</b>, crossed off or not{shared ? ", for everyone" : ""}. The list itself stays.
         </Confirm>
       )}
