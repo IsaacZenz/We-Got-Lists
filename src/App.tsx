@@ -6,14 +6,14 @@ import { NameForm } from "./profile/NameScreen";
 import { loadMyProfile, type Profile } from "./profile/profile";
 import { AccountPanel } from "./AccountPanel";
 import { Message, Shell, Title } from "./ui/Shell";
-import { PixelIcon } from "./ui/PixelIcon";
+import { ListsHome, type Tab } from "./lists/ListsHome";
 import { friendlyAuthError } from "./auth/messages";
 
 export function App() {
   const { session, loading, recovering, doneRecovering } = useAuth();
   const [profile, setProfile] = useState<Profile | null | undefined>(undefined); // undefined = still loading
   const [profileError, setProfileError] = useState("");
-  const [tab, setTab] = useState<"mine" | "shared">("mine");
+  const [tab, setTab] = useState<Tab>("mine");
   const [showAccount, setShowAccount] = useState(false);
   const userId = session?.user.id;
 
@@ -51,13 +51,7 @@ export function App() {
       {showAccount ? (
         <AccountPanel email={session.user.email ?? ""} profile={profile} onProfile={setProfile} onClose={() => setShowAccount(false)} />
       ) : (
-        <>
-          <Title icon={<PixelIcon name="star" />}>HI, {profile.display_name.toUpperCase()}!</Title>
-          <p className="note">
-            {tab === "mine" ? "Your lists will live here. Making lists arrives in the next milestone." : "Lists shared with friends will show up here."}
-          </p>
-          <p className="version">v{__APP_VERSION__}</p>
-        </>
+        <ListsHome profile={profile} onProfile={setProfile} tab={tab} setTab={setTab} />
       )}
     </Shell>
   );

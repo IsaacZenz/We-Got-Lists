@@ -41,3 +41,11 @@ Confirmation and password-reset emails must be allowed to open We Got Lists.
 - Your Rate My Coconut Water email + password already works here (shared sign-in).
 - On iPhone, the Home Screen app keeps its own sign-in, separate from Safari. Sign in inside the installed app.
 - Email links open in Safari. After confirming your email, go back to the app and sign in.
+
+---
+
+# Milestone 3: lists
+
+## 6. Run the lists script
+Supabase → **SQL Editor** → **New query** → paste all of `supabase/003-lists.sql` → **Run**.
+It adds `wgl.lists`, `wgl.list_members`, `wgl.items`, the star column on your profile, and the security rules.
