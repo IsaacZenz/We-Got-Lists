@@ -27,6 +27,7 @@ export function AccountPanel({ email, profile, onProfile, onClose }:
         <button className="btn b-blue" onClick={sendReset}>CHANGE PASSWORD</button>
         <button className="btn b-red" onClick={async () => { await supabase.auth.signOut(); clearAllCaches(); }}>SIGN OUT</button>
       </div>
+      <p className="version">App version {__APP_VERSION__}</p>
     </div>
   );
 }

@@ -8,11 +8,13 @@ const base = "/We-Got-Lists/";
 
 export default defineConfig({
   base,
-  define: { __APP_VERSION__: JSON.stringify(pkg.version) },
+  // Version tag shown in the account panel, e.g. "0.6.0 · b9e4310": lets you check which build your phone has.
+  define: { __APP_VERSION__: JSON.stringify(`${pkg.version} · ${(process.env.GITHUB_SHA ?? "dev").slice(0, 7)}`) },
   plugins: [
     react(),
     VitePWA({
       registerType: "autoUpdate",
+      injectRegister: false, // registered in src/main.tsx so we can check for updates on every open
       includeAssets: ["apple-touch-icon.png"],
       // Save the whole app on the phone (code, styles, fonts, icons) so it opens with no signal.
       workbox: { globPatterns: ["**/*.{js,css,html,woff2,png,svg}"] },

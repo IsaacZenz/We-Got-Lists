@@ -80,3 +80,4 @@ Each milestone ends with something you can open on your phone and test.
 - 2026-11-18: Checked the live Supabase project through the connector: scripts 001–004 all applied, RLS on every table, Realtime on. Applied `005-hardening.sql`. Ran a 17-check security test as two pretend users inside a rolled-back transaction: all passed, nothing left behind.
 - 2026-11-18: Owner feedback: list header too crowded on phone. Moved Refresh and Options to a bottom toolbar; back link on its own line.
 - 2026-11-18: Owner feedback round: options behind one ⋯ button, favourite chosen from that menu, star only on the favourite, tabs hidden inside a list, cow app icon, fixed grazing/pecking frames that cut animals' heads off.
+- 2026-11-18: Updates now apply themselves: the app checks for a new version each time it's opened (and every 30 min) and reloads onto it. Account panel shows the version (e.g. 0.6.0 · abc1234).
