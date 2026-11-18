@@ -5,6 +5,7 @@ import { NameForm } from "./profile/NameScreen";
 import type { Profile } from "./profile/profile";
 import { appUrl } from "./auth/useAuth";
 import { friendlyAuthError } from "./auth/messages";
+import { clearAllCaches } from "./data/cache";
 
 /** Opened by tapping your initials in the corner. */
 export function AccountPanel({ email, profile, onProfile, onClose }:
@@ -24,7 +25,7 @@ export function AccountPanel({ email, profile, onProfile, onClose }:
       {msg && <Message kind={msg.kind}>{msg.text}</Message>}
       <div className="row">
         <button className="btn b-blue" onClick={sendReset}>CHANGE PASSWORD</button>
-        <button className="btn b-red" onClick={() => supabase.auth.signOut()}>SIGN OUT</button>
+        <button className="btn b-red" onClick={async () => { await supabase.auth.signOut(); clearAllCaches(); }}>SIGN OUT</button>
       </div>
     </div>
   );

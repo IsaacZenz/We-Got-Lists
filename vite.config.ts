@@ -14,6 +14,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       includeAssets: ["apple-touch-icon.png"],
+      // Save the whole app on the phone (code, styles, fonts, icons) so it opens with no signal.
+      workbox: { globPatterns: ["**/*.{js,css,html,woff2,png,svg}"] },
       manifest: {
         name: "We Got Lists",
         short_name: "We Got Lists",

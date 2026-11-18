@@ -10,8 +10,11 @@ const ICONS = {
   back: ["....kk", "...kyk", "..kyyk", ".kyyyk", "kyyyyk", ".kyyyk", "..kyyk", "...kyk", "....kk"],
   dots: ["kk.kk.kk", "kk.kk.kk"],
   refresh: ["...kkkkk.k.", "..kcccccckk", ".kcckkkkcck", "kcck...kkkk", "kck........", "kck.....kck", "kkkk...kcck", "kcckkkkcck.", "kkcccccck..", ".k.kkkkk..."],
+  heart: [".kk...kk.", "krrk.krrk", "krwrkrrrk", "krrrrrrrk", ".krrrrrk.", "..krrrk..", "...krk...", "....k...."],
+  heartPink: [".kk...kk.", "kppk.kppk", "kpppkpppk", "kpppppppk", ".kpppppk.", "..kpppk..", "...kpk...", "....k...."],
+  heartOff: [".kk...kk.", "k..k.k..k", "k.......k", "k.......k", ".k.....k.", "..k...k..", "...k.k...", "....k...."],
 } as const;
-const COLORS: Record<string, string> = { k: "#3b2410", y: "#ffcf3a", o: "#d77a00", w: "#fffaf0", c: "#38a8ff", g: "#b49a6a" };
+const COLORS: Record<string, string> = { k: "#3b2410", y: "#ffcf3a", o: "#d77a00", w: "#fffaf0", c: "#38a8ff", g: "#b49a6a", r: "#e8323e", p: "#ffc2cc" };
 
 export type IconName = keyof typeof ICONS;
 

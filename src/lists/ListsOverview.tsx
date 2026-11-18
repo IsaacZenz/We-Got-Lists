@@ -23,7 +23,7 @@ export function ListsOverview({ lists, primaryId, shared, onOpen, onStar, onCrea
       <Title>{shared ? "SHARED LISTS" : "MY LISTS"}</Title>
       {lists.length === 0 && (
         <p className="note">{shared
-          ? "No shared lists yet. Sharing with friends arrives in the next milestone."
+          ? "No shared lists yet. Open one of your lists, tap ⋯ and choose Share to invite someone."
           : "No lists yet. Make your first one below!"}</p>
       )}
       <ul className="lists">
@@ -34,6 +34,7 @@ export function ListsOverview({ lists, primaryId, shared, onOpen, onStar, onCrea
             </button>
             <button className="list-open" onClick={() => onOpen(l.id)}>
               <span className="list-name">{l.name}</span>
+              {shared && <span className="ppl"><PixelIcon name="people" px={1} /> {l.memberCount}</span>}
               <span className="count">{l.remaining}</span>
             </button>
           </li>

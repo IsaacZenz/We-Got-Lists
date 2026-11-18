@@ -145,3 +145,39 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .dialog { width: 100%; max-width: 360px; background: var(--parchment); border: 4px solid var(--ink); box-shadow: 6px 6px 0 var(--ink); padding: 16px; }
 .dialog h3 { font-family: var(--pixel); font-size: 14px; font-weight: normal; color: #8a1018; margin-bottom: 10px; }
 .dialog-body { font-family: var(--readable); font-size: 17px; line-height: 1.4; margin-bottom: 16px; }
+
+/* ---- Sharing, hearts, live, offline (Milestones 4–6) ---- */
+.members { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin: 2px 0 10px; min-height: 30px; }
+.members .av { min-width: 28px; height: 28px; font-size: 8px; }
+.members .av:nth-child(3n+2) { background: #7cd0ff; } .members .av:nth-child(3n+3) { background: #ff9ec0; }
+.live { margin-left: auto; font-family: var(--pixel); font-size: 8px; color: #8a7350; }
+.live.on { color: var(--green-text); }
+.sticky { position: sticky; top: -14px; z-index: 4; background: var(--parchment); padding: 8px 0; margin-top: -8px; }
+.by { font-family: var(--pixel); font-size: 7px; padding: 4px; background: var(--parchment-edge); flex: none; }
+.heart { display: flex; align-items: center; flex: none; }
+.heart-btn { min-width: 30px; }
+.count-btn { background: none; border: none; font-family: var(--pixel); font-size: 9px; color: var(--red); padding: 6px 2px; min-width: 16px; }
+.who { display: block; font-size: 13px; color: #a02030; margin-top: 2px; }
+.pull { display: grid; place-items: center; overflow: hidden; font-family: var(--pixel); font-size: 8px; color: #7a5a30; transition: height .15s; }
+.menu-btns { display: flex; flex-direction: column; gap: 8px; }
+.share { display: flex; flex-direction: column; gap: 10px; }
+.share .back { align-self: flex-start; }
+.sub { font-family: var(--pixel); font-size: 11px; font-weight: normal; color: #7a3b00; margin-top: 8px; }
+.people { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.people li { display: flex; align-items: center; gap: 10px; font-family: var(--readable); font-size: 18px; }
+.grow { flex: 1; }
+.note.small { font-size: 15px; margin-bottom: 0; }
+.btn.small { padding: 8px 10px; font-size: 9px; }
+.linkbox { font-size: 14px; width: 100%; }
+.leave { margin-top: 18px; }
+.ppl { display: flex; align-items: center; gap: 4px; font-family: var(--pixel); font-size: 9px; color: #7a5a30; }
+.msg + .win-head, .msg + .list-view, .msg + div { margin-top: 12px; }
+.msg { margin-bottom: 4px; }
+
+/* Tighter rows so shared-list extras (initials, hearts) leave room for the item text. */
+.item { gap: 6px; padding: 8px 4px; }
+.item .icon-btn { min-width: 30px; }
+.item .grip { width: 20px; }
+.grip-space { width: 20px; }
+.box { width: 26px; height: 26px; }
+.txt { font-size: 18px; }

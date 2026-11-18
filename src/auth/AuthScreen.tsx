@@ -3,6 +3,7 @@ import { supabase } from "../supabase";
 import { Field, Message, Shell, Title } from "../ui/Shell";
 import { appUrl } from "./useAuth";
 import { friendlyAuthError } from "./messages";
+import { hasPendingJoin } from "../join";
 
 type Mode = "signin" | "signup" | "forgot";
 const MIN_PASSWORD = 8;
@@ -57,6 +58,7 @@ export function AuthScreen() {
   return (
     <Shell>
       <Title>{title}</Title>
+      {hasPendingJoin() && <Message kind="info">Someone shared a list with you! Sign in (or create an account) to join it.</Message>}
       {mode === "signup" && <p className="note">Same login as Rate My Coconut Water, if you have one.</p>}
       {mode === "forgot" && <p className="note">We'll email you a link to pick a new password.</p>}
       <form onSubmit={submit} className="form" noValidate>

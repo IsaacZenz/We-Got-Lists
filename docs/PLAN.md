@@ -15,15 +15,16 @@
 | Adding items | New items go to the bottom of the to-get section. The text box keeps focus so you can type several in a row. |
 | Deleting items | Trash icon on every item (to-get and crossed off). No confirm for single items. |
 | Clearing | Two buttons: **Clear got-it** (crossed-off only) and **Clear all** (asks "Are you sure?"). |
-| Sharing | Invite by link. Anyone you share with becomes a "friend" you can add to future lists in one tap. |
+| Sharing | Invite by link (⋯ → Share). Links last 14 days and open in Safari; whoever signs in joins. Anyone who shares a list with you is a "friend" you can add to other lists in one tap (no friend requests). |
+| Leaving vs deleting | Shared list menu: **People & Sharing → Leave** removes it from your phone only; **Delete for everyone** (with confirm) deletes it for all. The last person to leave deletes it. |
 | Permissions | Everyone on a shared list can do everything (add, cross off, delete, clear, rename, invite). |
-| Updates | Live updates (Supabase Realtime) plus pull-to-refresh as a backup. |
+| Updates | Live updates (Supabase Realtime) plus pull-to-refresh and a refresh button. Also refreshes when the app comes back to the front. Status line shows ● LIVE / ○ OFFLINE · N WAITING / ↻ SAVING. |
 | Who added it | Small initials badge on each item in shared lists. |
-| Hearts | Shared lists only. Many people can heart one item. Shows filled heart + count; tap to see who. |
-| Offline | Shows the last-loaded lists without signal; changes made offline are saved and sent when signal returns. |
+| Hearts | Shared lists only. Many people can heart one item. Red heart = you hearted it, pink = others did. Tap the count to see who. |
+| Offline | The whole app (code, fonts, icons) is saved on the phone. Last-loaded lists/items show without signal. Item changes (add, cross off, delete, reorder, clear, heart) wait in an outbox and send when signal returns. Making/renaming/deleting lists, starring and sharing need a connection and say so. Signing out clears the phone's saved copy. |
 | Look | **Meadow** (2026-11-17): sky + grass, list on a parchment scroll, wooden buttons. See `docs/mockups/d-meadow-v2.*`. |
 | Meadow scene | A strip of meadow under the logo with cows and chickens wandering (each faces the way it walks). Every 20 seconds a pterodactyl swoops down and carries off a randomly chosen cow or chicken; a new one wanders in. Original sprites. Timing numbers live in `MEADOW` in `src/scene/meadow.ts`. |
-| Fonts | Blocky pixel font ("Press Start 2P") for headings/buttons, "Pixelify Sans" for small text, and a clean readable font ("Nunito" bold) for list item text only. |
+| Fonts (bundled in the app, not from Google, so they work offline) | Blocky pixel font ("Press Start 2P") for headings/buttons, "Pixelify Sans" for small text, and a clean readable font ("Nunito" bold) for list item text only. |
 | Rows | Alternating parchment shades on list rows. |
 | Tabs | My Lists / Shared tab bar sits at the **bottom** of the screen (thumb-reachable, iPhone convention, frees space for the meadow). |
 
@@ -48,8 +49,8 @@ iPhone (PWA from GitHub Pages)  ⇄  Supabase
 - `lists` — id, name, owner_id, created_at (made via `wgl.create_list()`, which also adds you as a member)
 - `list_members` — list_id, user_id, joined_at  (a list is "shared" when it has more than one member)
 - `items` — id, list_id, text, done, done_at, position, added_by, created_at
-- `item_hearts` — item_id, user_id  (one heart per person per item)
-- `invites` — code, list_id, created_by, expires_at
+- `item_hearts` — item_id, user_id, list_id  (one heart per person per item; list_id is for live-update filtering)
+- `invites` — code, list_id, created_by, expires_at (14 days; only used through `create_invite` / `join_list`)
 - Friends = everyone who shares at least one list with you (worked out from `list_members`; no extra table).
 
 **Security:** Row Level Security rules make sure you can only read or change lists you are a member of. That's what keeps the public app key safe to put in the website.
@@ -62,9 +63,9 @@ Each milestone ends with something you can open on your phone and test.
 - [x] **1. Skeleton + deploy**: Vite + React + TypeScript app, deployed to GitHub Pages, connected to your Supabase project. *Done when:* the site loads on your iPhone and can be added to the Home Screen.
 - [x] **2. Accounts**: sign up, sign in, sign out, forgot password, set display name. *Done when:* you can make an account on your phone and stay signed in.
 - [x] **3. My lists**: create/rename/delete lists, add/cross off/delete/drag-to-reorder items, both clear buttons, star primary list, in the Meadow look (with cows).
-- [ ] **4. Sharing**: invite link, join a list, Shared tab, member badges, friends quick-add, leave list.
-- [ ] **5. Live + hearts**: realtime updates, pull-to-refresh, hearts with counts and "who hearted".
-- [ ] **6. Offline + polish**: works without signal, app icon, splash screen, sounds (optional, original).
+- [x] **4. Sharing**: invite link, join a list, Shared tab, member badges, friends quick-add, leave list.
+- [x] **5. Live + hearts**: realtime updates, pull-to-refresh, hearts with counts and "who hearted".
+- [x] **6. Offline + polish**: works without signal, app icon, bundled fonts, sticky add box, instant start from the saved copy. *Not done:* custom splash screen and sounds (optional; ask if wanted).
 
 ## Progress log
 - 2026-11-17: Plan agreed; three pixel-art mockups made (`docs/mockups/*.png`).
@@ -73,3 +74,4 @@ Each milestone ends with something you can open on your phone and test.
 - 2026-11-18: Milestone 1 built: Vite + React + TypeScript app with the live meadow scene, Supabase connection check (`wgl.ping`), PWA install support, GitHub Pages deploy workflow. Owner still to: enable Pages, run `supabase/001-setup.sql`, expose the `wgl` schema.
 - 2026-11-18: Milestone 2 built: sign in / create account / forgot + new password / display name / account panel / sign out. `supabase/002-accounts.sql`. Tested with a fake Supabase in Playwright; owner to test against the real one.
 - 2026-11-18: Milestone 3 built: lists overview, create/rename/delete list, add/cross off/un-cross/delete items, drag to reorder, clear got-it, clear all (confirm), star opens on launch. `supabase/003-lists.sql`. 13-step walkthrough (`e2e/lists.cjs`) passes against a fake Supabase.
+- 2026-11-18: Milestones 4–6 built together (owner asked): invite links, join, friends quick-add, leave / delete for everyone, initials on items, hearts, Realtime live updates, pull-to-refresh, offline outbox + saved copy, bundled fonts. `supabase/004-sharing-hearts-live.sql`. Checks: 40 unit tests, 13-step list walkthrough, 19-step sharing/offline walkthrough (fake Supabase). Live updates between two real phones not testable here.

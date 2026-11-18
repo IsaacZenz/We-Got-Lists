@@ -49,3 +49,15 @@ Confirmation and password-reset emails must be allowed to open We Got Lists.
 ## 6. Run the lists script
 Supabase → **SQL Editor** → **New query** → paste all of `supabase/003-lists.sql` → **Run**.
 It adds `wgl.lists`, `wgl.list_members`, `wgl.items`, the star column on your profile, and the security rules.
+
+---
+
+# Milestones 4–6: sharing, hearts, live updates, offline
+
+## 7. Run the sharing script
+Supabase → **SQL Editor** → **New query** → paste all of `supabase/004-sharing-hearts-live.sql` → **Run**.
+It adds invites, hearts, the "friends" rules, and turns on live updates (Realtime) for the We Got Lists tables.
+
+## How invites work on iPhone
+- Invite links open in **Safari**, not the Home Screen app. Your friend signs in (or creates an account) there and joins.
+- After that the list is on their account, so it shows up in their installed app too.

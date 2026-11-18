@@ -17,3 +17,7 @@ export interface Item {
   added_by: string | null;
   created_at: string;
 }
+
+export interface Heart { item_id: string; user_id: string; list_id: string }
+
+export interface Person { id: string; display_name: string; initials: string }
