@@ -11,8 +11,9 @@
 2. Left sidebar → **SQL Editor** → **New query**.
 3. Paste all of `supabase/001-setup.sql` and press **Run**. You should see "Success. No rows returned".
    (It only creates a new `wgl` schema — it does not touch Coconut-Water's tables.)
-4. Project Settings (gear, bottom-left) → **Data API** → **Exposed schemas**: add `wgl` next to `public`, then **Save**.
-   Leave `public` there — Coconut-Water needs it.
+4. Left sidebar → **Integrations** → **Data API** → **Settings** tab → **Exposed schemas**: tick `wgl`
+   (keep `public` ticked — Coconut-Water needs it), then **Save**.
+   If `wgl` isn't in the list, step 3 hasn't run yet; run it and reload the page.
 
 ## 3. Install on iPhone
 1. Open the app link in **Safari** (not Chrome — iPhone only installs from Safari).

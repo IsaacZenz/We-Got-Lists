@@ -4,7 +4,7 @@ import { PixelIcon } from "./ui/PixelIcon";
 import { checkConnection, type ConnectionStatus } from "./supabase";
 
 const HELP: Record<string, string> = {
-  "schema-not-exposed": "Supabase isn't sharing the 'wgl' tables yet. In Supabase: Project Settings → Data API → Exposed schemas → add wgl → Save.",
+  "schema-not-exposed": "Supabase isn't sharing the 'wgl' tables yet. In Supabase: Integrations → Data API → Settings tab → Exposed schemas → tick wgl → Save.",
   "setup-script-not-run": "The database setup script hasn't been run yet. Paste supabase/001-setup.sql into Supabase's SQL Editor and press Run.",
   offline: "Couldn't reach Supabase. Check your internet connection.",
   other: "Something unexpected went wrong talking to Supabase.",
