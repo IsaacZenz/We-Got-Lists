@@ -31,6 +31,9 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
   const [ask, setAsk] = useState<Ask>(null);
   const [whoFor, setWhoFor] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  // When the options menu opens at the bottom, scroll it into view.
+  useEffect(() => { if (menu) menuRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" }); }, [menu]);
   const pull = usePullToRefresh(data.refresh);
 
   const shared = (members.length || list.memberCount) > 1;
@@ -91,14 +94,12 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
   return (
     <div className="list-view" ref={pull.ref}>
       <PullIndicator {...pull} />
+      <button className="link back-link" onClick={onBack} aria-label="All lists"><PixelIcon name="back" px={2} /> All lists</button>
       <div className="win-head">
-        <button className="icon-btn" onClick={onBack} aria-label="All lists"><PixelIcon name="back" px={3} /></button>
         <button className="star-btn" onClick={onStar} aria-label={isPrimary ? "Primary list (tap to unstar)" : "Make this my primary list"}>
           <PixelIcon name={isPrimary ? "star" : "starOff"} />
         </button>
         <h2 className="list-title">{list.name}</h2>
-        <button className="icon-btn" onClick={() => void data.refresh()} aria-label="Refresh"><PixelIcon name="refresh" px={3} /></button>
-        <button className="icon-btn" onClick={() => setMenu(m => !m)} aria-label="List options"><PixelIcon name="dots" px={3} /></button>
       </div>
 
       <div className="members">
@@ -107,23 +108,6 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
           {data.offline ? `○ OFFLINE${data.waiting ? ` · ${data.waiting} WAITING` : ""}` : data.waiting ? `↻ SAVING ${data.waiting}` : data.live ? "● LIVE" : "○ CONNECTING"}
         </span>
       </div>
-
-      {menu && (
-        <div className="menu">
-          {renaming === null ? (
-            <div className="menu-btns">
-              <button className="btn b-blue" onClick={() => { setPeople(true); setMenu(false); }}>{shared ? "PEOPLE & SHARING" : "SHARE THIS LIST"}</button>
-              <button className="btn b-wood" onClick={() => setRenaming(list.name)}>RENAME</button>
-              <button className="btn b-red" onClick={() => setAsk("delete-list")}>{shared ? "DELETE FOR EVERYONE" : "DELETE LIST"}</button>
-            </div>
-          ) : (
-            <form className="add" onSubmit={saveName}>
-              <input className="add-in" value={renaming} maxLength={40} autoFocus onChange={e => setRenaming(e.target.value)} aria-label="List name" />
-              <button className="btn b-green">SAVE</button>
-            </form>
-          )}
-        </div>
-      )}
 
       {(error || data.error) && <Message kind="error">{error || data.error} <button className="link" onClick={() => { setError(""); data.clearError(); }}>OK</button></Message>}
 
@@ -157,6 +141,28 @@ export function ListView({ list, userId, isPrimary, onBack, onStar, onRenamed, o
           )}
         </>
       )}
+
+      <div className="toolbar">
+        <button className="btn b-wood" onClick={() => void data.refresh()} aria-label="Refresh"><PixelIcon name="refresh" px={2} /> REFRESH</button>
+        <button className="btn b-wood" onClick={() => setMenu(m => !m)} aria-label="List options" aria-expanded={menu}><PixelIcon name="dots" px={2} /> OPTIONS</button>
+      </div>
+      {menu && (
+        <div className="menu" ref={menuRef}>
+          {renaming === null ? (
+            <div className="menu-btns">
+              <button className="btn b-blue" onClick={() => { setPeople(true); setMenu(false); }}>{shared ? "PEOPLE & SHARING" : "SHARE THIS LIST"}</button>
+              <button className="btn b-wood" onClick={() => setRenaming(list.name)}>RENAME</button>
+              <button className="btn b-red" onClick={() => setAsk("delete-list")}>{shared ? "DELETE FOR EVERYONE" : "DELETE LIST"}</button>
+            </div>
+          ) : (
+            <form className="add" onSubmit={saveName}>
+              <input className="add-in" value={renaming} maxLength={40} autoFocus onChange={e => setRenaming(e.target.value)} aria-label="List name" />
+              <button className="btn b-green">SAVE</button>
+            </form>
+          )}
+        </div>
+      )}
+
 
       {ask === "clear-all" && (
         <Confirm title="CLEAR ALL?" yes="CLEAR ALL" onNo={() => setAsk(null)} onYes={() => { setAsk(null); clear(false); }}>

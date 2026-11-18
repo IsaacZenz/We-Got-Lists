@@ -181,3 +181,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 .grip-space { width: 20px; }
 .box { width: 26px; height: 26px; }
 .txt { font-size: 18px; }
+
+/* List header: back on its own line, star + name get the full row; tools live at the bottom. */
+.back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 16px; margin-bottom: 6px; }
+.toolbar { display: flex; gap: 8px; margin-top: 18px; padding-top: 12px; border-top: 3px dashed var(--parchment-edge); }
+.toolbar .btn { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-size: 9px; }
+.toolbar + .menu { margin-top: 10px; }
